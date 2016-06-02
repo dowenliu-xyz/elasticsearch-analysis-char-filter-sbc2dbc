@@ -106,7 +106,7 @@
                 <configuration>
                     <outputDirectory>${project.build.directory}/releases/</outputDirectory>
                     <descriptors>
-                        <descriptor>${basedir}/src/main/plugin/release-assemby.xml</descriptor>
+                        <descriptor>${basedir}/src/main/plugin/release-assembly.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>
