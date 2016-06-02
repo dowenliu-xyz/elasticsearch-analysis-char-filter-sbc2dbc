@@ -1,0 +1,1 @@
+全角转半角charFilter ES支持
