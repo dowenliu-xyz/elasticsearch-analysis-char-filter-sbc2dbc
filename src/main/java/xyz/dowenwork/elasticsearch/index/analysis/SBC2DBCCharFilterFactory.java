@@ -1,9 +1,7 @@
 package xyz.dowenwork.elasticsearch.index.analysis;
 
-import org.elasticsearch.common.inject.Inject;
-import org.elasticsearch.index.Index;
+import org.elasticsearch.index.IndexSettings;
 import org.elasticsearch.index.analysis.AbstractCharFilterFactory;
-import org.elasticsearch.index.settings.IndexSettingsService;
 import xyz.dowenwork.lucene.analyzer.SBC2DBCCaseCharFilter;
 
 import java.io.Reader;
@@ -15,10 +13,8 @@ import java.io.Reader;
  * @since 2.3.3.0
  */
 public class SBC2DBCCharFilterFactory extends AbstractCharFilterFactory {
-    @Inject
-    public SBC2DBCCharFilterFactory(Index index,
-            IndexSettingsService indexSettingsService, String name) {
-        super(index, indexSettingsService.indexSettings(), name);
+    public SBC2DBCCharFilterFactory(IndexSettings indexSettings, String name) {
+        super(indexSettings, name);
     }
 
     @Override

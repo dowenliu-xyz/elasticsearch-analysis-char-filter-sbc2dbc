@@ -1,13 +1,13 @@
 package xyz.dowenwork.elasticsearch.plugin;
 
-import org.elasticsearch.common.inject.Module;
-import org.elasticsearch.index.analysis.AnalysisModule;
+import org.elasticsearch.index.analysis.CharFilterFactory;
+import org.elasticsearch.indices.analysis.AnalysisModule;
+import org.elasticsearch.plugins.AnalysisPlugin;
 import org.elasticsearch.plugins.Plugin;
-import xyz.dowenwork.elasticsearch.index.analysis.Sbc2dbcAnalysisBinderProcessor;
-import xyz.dowenwork.elasticsearch.indices.analysis.Sbc2dbcAnalysisModule;
+import xyz.dowenwork.elasticsearch.index.analysis.SBC2DBCCharFilterFactory;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>create at 16-6-2</p>
@@ -16,26 +16,13 @@ import java.util.Collections;
  * @since 2.3.3.0
  */
 @SuppressWarnings("unused")
-public class AnalysisSbc2dbcPlugin extends Plugin {
+public class AnalysisSbc2dbcPlugin extends Plugin implements AnalysisPlugin {
     @Override
-    public String name() {
-        return "analysis-sbc2dbc";
-    }
+    public Map<String, AnalysisModule.AnalysisProvider<CharFilterFactory>> getCharFilters() {
+        Map<String, AnalysisModule.AnalysisProvider<CharFilterFactory>> factories = new HashMap<>();
 
-    @Override
-    public String description() {
-        return "全角字符转半角字符";
-    }
+        factories.put("sbc2dbc", (indexSettings, environment, name, settings) -> new SBC2DBCCharFilterFactory(indexSettings, name));
 
-    @Override
-    public Collection<Module> nodeModules() {
-        return Collections.<Module>singletonList(new Sbc2dbcAnalysisModule());
-    }
-
-    /**
-     * Automatically called with the analysis module.
-     */
-    public void onModule(AnalysisModule module) {
-        module.addProcessor(new Sbc2dbcAnalysisBinderProcessor());
+        return factories;
     }
 }
